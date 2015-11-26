@@ -13,9 +13,14 @@
 ### Local gradle installation
   
     $ gradle clean test run
+    
+## Feature list
+
+    backlog.md    
 
 ## Further Resources
 
 * [Spock homepage](http://spockframework.org)
 * [Gradle homepage](http://www.gradle.org)
 * [Groovy homepage](http://groovy.codehaus.org)
+
