@@ -8,12 +8,12 @@ As a user i need an user interface to interact with the application.
 As a developer i want that a build server is triggered after push to be informed about a broken build.
 
 ## Craps-003
-As a user i want to start the game to roll the two dices.
+As a user i want to start the game to roll two dices in one single round.
 
 ### Acceptance Criteria
-* The game can be started without any parameter via the terminal.
+* The game can be started without any arguments via the terminal.
 * The value of the dices will be printed to the terminal.
-* The value is the sum of both dices.
+* The printed value is the sum of both dices.
 
 ## Craps-004
 As a user i want to start the game to play it with one player one round automatically. 
