@@ -5,14 +5,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class Round {
 
-    private int number;
     private int sum;
     private Player player;
+    private Score score;
 
-    public Round(int number, Player player, int sum) {
-        this.number = number;
+    public Round(Player player, int sum, Score score) {
         this.player = player;
         this.sum = sum;
+        this.score = score;
     }
 
     public Player getPlayer() {
@@ -23,6 +23,10 @@ public class Round {
         return sum;
     }
 
+    public Score getScore() {
+        return score;
+    }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
@@ -30,9 +34,8 @@ public class Round {
 
     public String buildMessage() {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("round %s: ", number));
         builder.append(player.buildMessage());
-        builder.append(String.format(" throws %s", sum));
+        builder.append(String.format(" throws %s and has a %s", sum, score));
         return builder.toString();
     }
 }

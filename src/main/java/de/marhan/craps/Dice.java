@@ -1,20 +1,15 @@
 package de.marhan.craps;
 
+import java.util.Random;
+
 public class Dice {
 
-    private RandomMachine randomMachine;
+    private Random r = new Random();
 
+    private static final int MIN_VALUE = 1;
     private static final int MAX_VALUE = 6;
 
-    public Dice() {
-        this(new RandomMachine());
-    }
-
-    public Dice(RandomMachine randomMachine) {
-        this.randomMachine = randomMachine;
-    }
-
     public int nextValue() {
-        return randomMachine.random(MAX_VALUE);
+        return r.nextInt((MAX_VALUE - MIN_VALUE) + 1) + MIN_VALUE;
     }
 }

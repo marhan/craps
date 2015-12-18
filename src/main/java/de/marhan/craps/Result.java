@@ -3,16 +3,16 @@ package de.marhan.craps;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Result {
 
-    private Set<Round> rounds = new HashSet<Round>();
+    private List<Round> rounds = new ArrayList<>();
 
-    public void addRound(Player player, int sum) {
-        int number = rounds.size() + 1;
-        rounds.add(new Round(number, player, sum));
+    public Result(List<Round> rounds) {
+        this.rounds = rounds;
     }
 
     @Override
@@ -23,13 +23,13 @@ public class Result {
     public String buildMessage() {
         StringBuilder builder = new StringBuilder();
         builder.append(String.format("%s rounds played:%n", rounds.size()));
-
-        for (Round round : rounds) {
-            builder.append(round.buildMessage());
-            builder.append(String.format("%n"));
-        }
-
+        builder.append(rounds.stream().map(r -> buildRoundString(r)).collect(Collectors.joining()));
         return builder.toString();
+
+    }
+
+    private String buildRoundString(Round r) {
+        return String.format("round %s: %s%n", rounds.indexOf(r) + 1, r.buildMessage());
     }
 
 }

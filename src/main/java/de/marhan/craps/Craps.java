@@ -1,12 +1,10 @@
 package de.marhan.craps;
 
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
@@ -14,6 +12,8 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 public class Craps {
 
     private static Logger LOG = LogManager.getLogger(Craps.class);
+
+    private List<Round> rounds = new ArrayList<>();
 
     public Result play() {
 
@@ -25,19 +25,26 @@ public class Craps {
         players.add(new Player(1));
         players.add(new Player(2));
 
-        return play(dices, players);
+        return playWith(dices, players);
 
     }
 
-    public Result play(Set<Dice> dices, Set<Player> players) {
-
-        Result result = new Result();
+    public Result playWith(Set<Dice> dices, Set<Player> players) {
 
         Player player = players.stream().findFirst().get();
-        int sum = player.throwDices(dices);
-        result.addRound(player, sum);
+        Round round = playRound(player, dices);
+        rounds.add(round);
 
-        return result;
+        return createResult();
+    }
+
+    public Round playRound(Player player, Set<Dice> dices) {
+        int sum = player.throwDices(dices);
+        return new Round(player, sum, Score.determineScore(sum));
+    }
+
+    private Result createResult() {
+        return new Result(rounds);
     }
 
     public static void main(String[] args) {
