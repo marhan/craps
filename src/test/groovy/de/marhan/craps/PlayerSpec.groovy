@@ -11,21 +11,21 @@ class PlayerSpec extends Specification {
         Dice dice2 = Mock(Dice)
         Player player = new Player(1)
 
-        when: "dices will throw 3 in sum"
+        when: "dices will roll 3 in sum"
         dice1.nextValue() >> 1
         dice2.nextValue() >> 2
         Set<Dice> dices = [dice1, dice2]
 
-        and: "player throws the dices"
-        int sum = player.throwDices(dices)
+        and: "shooter rolls the dices"
+        int sum = player.rollDices(dices)
 
         then: "the result is as expected"
         sum == 3
     }
 
-    def "Player has his number in its message"() {
+    def "Player is identified in its message"() {
 
-        given: "Player with a number"
+        given: "Player has a number"
         def subject = new Player(1)
 
         when: "message is build"

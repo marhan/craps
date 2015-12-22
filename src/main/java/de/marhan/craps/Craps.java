@@ -4,7 +4,10 @@ package de.marhan.craps;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
@@ -14,6 +17,15 @@ public class Craps {
     private static Logger LOG = LogManager.getLogger(Craps.class);
 
     private List<Round> rounds = new ArrayList<>();
+    private Set<Player> players = new HashSet<>();
+
+    public List<Round> getRounds() {
+        return rounds;
+    }
+
+    public Set<Player> getPlayers() {
+        return players;
+    }
 
     public Result play() {
 
@@ -21,30 +33,27 @@ public class Craps {
         dices.add(new Dice());
         dices.add(new Dice());
 
-        Set<Player> players = new HashSet<>();
         players.add(new Player(1));
         players.add(new Player(2));
+        players.add(new Player(3));
 
-        return playWith(dices, players);
+        return playWith(players, dices);
 
     }
 
-    public Result playWith(Set<Dice> dices, Set<Player> players) {
+    public Result playWith(Set<Player> players, Set<Dice> dices) {
+        Player shooter = players.stream().findFirst().get();
+        Round round = new Round().play(shooter, dices);
+        GameScoring gameScoring = determineScoringBy(round);
+        return new Result(rounds, gameScoring);
+    }
 
-        Player player = players.stream().findFirst().get();
-        Round round = playRound(player, dices);
+    private GameScoring determineScoringBy(Round round) {
         rounds.add(round);
-
-        return createResult();
-    }
-
-    public Round playRound(Player player, Set<Dice> dices) {
-        int sum = player.throwDices(dices);
-        return new Round(player, sum, Score.determineScore(sum));
-    }
-
-    private Result createResult() {
-        return new Result(rounds);
+        if (rounds.size() == 1) {
+            return GameScoring.determineFirstRound(round.getRoundScoring());
+        }
+        return GameScoring.OPEN;
     }
 
     public static void main(String[] args) {

@@ -9,7 +9,7 @@ class ResultSpec extends Specification {
         given: "result has a round"
         def round1 = Mock(Round)
         def round2 = Mock(Round)
-        def subject = new Result([round1, round2])
+        def subject = new Result([round1, round2], GameScoring.WINS)
 
         when: "round returns message"
         round1.buildMessage() >> "ANY_MESSAGE"
@@ -18,8 +18,8 @@ class ResultSpec extends Specification {
         and: "message is used to build it own"
         def message = subject.buildMessage()
 
-        then: "round, player and sum is printed"
-        message == "2 rounds played:\nround 1: ANY_MESSAGE\nround 2: ANY_OTHER_MESSAGE\n"
+        then: "round, shooter and sum is printed"
+        message == "2 rounds played, shooter WINS:\nRound 1: ANY_MESSAGE\nRound 2: ANY_OTHER_MESSAGE\n"
     }
 
 }

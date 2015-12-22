@@ -3,20 +3,23 @@ package de.marhan.craps
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static de.marhan.craps.Score.*
+import static GameScoring.*
 
 class CrapsSpec extends Specification {
 
     def "Play with default configuration"() {
 
-        given:
+        given: "A new craps game"
         def subject = new Craps();
 
-        when:
-        Result result = subject.play()
+        when: "the game is played"
+        subject.play()
 
-        then:
-        result.rounds[0].sum > 0;
+        then: "Three players are initialized"
+        subject.players.size() == 3
+
+        and: "some rounds are played"
+        subject.rounds.size() > 0
     }
 
     def "Play with two dices and get a sum"() {
@@ -37,7 +40,7 @@ class CrapsSpec extends Specification {
         Set<Player> players = [player1, player2]
 
         and:
-        Result result = subject.playWith(dices, players)
+        Result result = subject.playWith(players, dices)
 
         then:
         result.rounds.size() == 1
@@ -45,39 +48,43 @@ class CrapsSpec extends Specification {
     }
 
     @Unroll
-    def "Play a round with #sum and get a #expectedScore"() {
+    def "Play first round with #preparedSum of dices and shooter #expectedGameScoring"() {
 
         given: "the game craps"
         def subject = new Craps()
 
-        and: "and player with dices"
-        def player = new Player(1)
+        and: "with players"
+        Set<Player> players = [new Player(1), new Player(2), new Player(3)]
+
+        and: "with dices"
         def dice1 = Mock(Dice)
         def dice2 = Mock(Dice)
         Set<Dice> dices = [dice1, dice2]
 
-        when: "dice sum is #sum"
         dice1.nextValue() >> 1
-        dice2.nextValue() >> sum - 1
+        dice2.nextValue() >> preparedSum - 1
 
-        and: "player plays one round"
-        def round = subject.playRound(player, dices)
+        when: "craps is played"
+        def result = subject.playWith(players, dices)
 
-        then: "the player wins"
-        round.score == expectedScore
+        then: "the result is as expected"
+        result.rounds.size() == 1
+        result.rounds[0].sum == preparedSum
+        result.gameScoring == expectedGameScoring
 
         where:
-        sum | expectedScore
-        2   | Crap
-        3   | Crap
-        4   | Point
-        5   | Point
-        6   | Point
-        7   | Natural
-        8   | Point
-        9   | Point
-        10  | Point
-        11  | Natural
-        12  | Crap
+        preparedSum | expectedGameScoring
+        2           | LOSE
+        3           | LOSE
+        4           | OPEN
+        5           | OPEN
+        6           | OPEN
+        7           | WINS
+        8           | OPEN
+        9           | OPEN
+        10          | OPEN
+        11          | WINS
+        12          | LOSE
     }
+
 }

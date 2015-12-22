@@ -2,37 +2,37 @@ package de.marhan.craps
 
 import spock.lang.Specification
 
-import static de.marhan.craps.Score.*
+import static RoundScoring.*
 
 class ScoreSpec extends Specification {
 
     def "Score returns #score for #sum"() {
 
         when: "expectedScore determines the sum"
-        def determinedScore = Score.determineScore(sum)
+        def determinedScore = RoundScoring.determine(sum)
 
         then: "the sum is as expected"
         determinedScore == expectedScore
 
         where:
         sum | expectedScore
-        2   | Crap
-        3   | Crap
-        4   | Point
-        5   | Point
-        6   | Point
-        7   | Natural
-        8   | Point
-        9   | Point
-        10  | Point
-        11  | Natural
-        12  | Crap
+        2   | CRAP
+        3   | CRAP
+        4   | POINT
+        5   | POINT
+        6   | POINT
+        7   | NATURAL
+        8   | POINT
+        9   | POINT
+        10  | POINT
+        11  | NATURAL
+        12  | CRAP
     }
 
     def "Score throws exception if sum is not in range"() {
 
         when: "expectedScore determines the sum"
-        Score.determineScore(sum)
+        RoundScoring.determine(sum)
 
         then: "the sum is as expected"
         def e = thrown(IllegalArgumentException)
