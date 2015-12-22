@@ -10,9 +10,11 @@ import java.util.stream.Collectors;
 public class Result {
 
     private List<Round> rounds = new ArrayList<>();
+    private GameScoring gameScoring;
 
-    public Result(List<Round> rounds) {
+    public Result(List<Round> rounds, GameScoring gameScoring) {
         this.rounds = rounds;
+        this.gameScoring = gameScoring;
     }
 
     @Override
@@ -22,14 +24,14 @@ public class Result {
 
     public String buildMessage() {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("%s rounds played:%n", rounds.size()));
+        builder.append(String.format("%s rounds played, shooter %s:%n", rounds.size(), gameScoring));
         builder.append(rounds.stream().map(r -> buildRoundString(r)).collect(Collectors.joining()));
         return builder.toString();
 
     }
 
     private String buildRoundString(Round r) {
-        return String.format("round %s: %s%n", rounds.indexOf(r) + 1, r.buildMessage());
+        return String.format("Round %s: %s%n", rounds.indexOf(r) + 1, r.buildMessage());
     }
 
 }

@@ -13,11 +13,7 @@ public class Player {
         this.number = number;
     }
 
-    public int getNumber() {
-        return number;
-    }
-
-    public int throwDices(Set<Dice> dices) {
+    public int rollDices(Set<Dice> dices) {
         return dices.stream().map(dice -> dice.nextValue()).reduce(0, (a, b) -> a + b);
     }
 
