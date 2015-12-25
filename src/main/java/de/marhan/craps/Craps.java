@@ -16,23 +16,13 @@ public class Craps {
 
     private static Logger LOG = LogManager.getLogger(Craps.class);
 
-    private List<Round> rounds = new ArrayList<>();
-    private Set<Player> players = new HashSet<>();
-
-    public List<Round> getRounds() {
-        return rounds;
-    }
-
-    public Set<Player> getPlayers() {
-        return players;
-    }
-
     public Result play() {
 
         Set<Dice> dices = new HashSet<>();
         dices.add(new Dice());
         dices.add(new Dice());
 
+        List<Player> players = new ArrayList<>();
         players.add(new Player(1));
         players.add(new Player(2));
         players.add(new Player(3));
@@ -41,30 +31,32 @@ public class Craps {
 
     }
 
-    public Result playWith(Set<Player> players, Set<Dice> dices) {
-        Player shooter = players.stream().findFirst().get();
-        Round round = new Round().play(shooter, dices);
-        GameScoring gameScoring = determineScoringBy(round);
-        return new Result(rounds, gameScoring);
+    public Result playWith(List<Player> players, Set<Dice> dices) {
+        List<Round> rounds = playRound(players.get(0), dices, new ArrayList<>());
+        return new Result(rounds, GameScoring.determine(rounds));
     }
 
-    private GameScoring determineScoringBy(Round round) {
-        rounds.add(round);
-        if (rounds.size() == 1) {
-            return GameScoring.determineFirstRound(round.getRoundScoring());
+    private List<Round> playRound(Player shooter, Set<Dice> dices, List<Round> rounds) {
+
+        rounds.add(new Round().play(shooter, dices));
+
+        if (GameScoring.OPEN.equals(GameScoring.determine(rounds))) {
+            playRound(shooter, dices, rounds);
         }
-        return GameScoring.OPEN;
+
+        return rounds;
     }
+
 
     public static void main(String[] args) {
-        LOG.info("---> Start Playing Craps <---");
+        LOG.info("---> Start Game <---");
         LOG.info(EMPTY);
 
         Craps craps = new Craps();
         Result result = craps.play();
 
         LOG.info(result.buildMessage());
-        LOG.info("--> End Playing Craps <---");
+        LOG.info("---> Game Over <---");
 
     }
 

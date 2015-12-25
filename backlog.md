@@ -41,7 +41,7 @@ As a user i want to play many rounds to get the Shooter win or fail after all.
 
 ### Acceptance Criteria
 * If the Shooter rolls a Point in the first round, a new round starts.
-* After the first round the rules of play differs as described below.
-* If the Shooter rolls the same roll as he does in the first round, he wins.
+* At the second round and after, the rules for scoring are as described below.
+* If the Shooter rolls the same roll as he does in the round before, he wins.
 * If the Shooter rolls a 7, he lose.
-* If the Shooter rolls any other roll, he rolls again.   
+* If the Shooter rolls any other sum, he rolls again.   
