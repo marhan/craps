@@ -1,5 +1,7 @@
 package de.marhan.craps;
 
+import de.marhan.craps.round.Round;
+import de.marhan.craps.round.Scoring;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -10,11 +12,11 @@ import java.util.stream.Collectors;
 public class Result {
 
     private List<Round> rounds = new ArrayList<>();
-    private GameScoring gameScoring;
+    private final Scoring scoring;
 
-    public Result(List<Round> rounds, GameScoring gameScoring) {
+    public Result(List<Round> rounds, Scoring scoring) {
         this.rounds = rounds;
-        this.gameScoring = gameScoring;
+        this.scoring = scoring;
     }
 
     @Override
@@ -24,14 +26,14 @@ public class Result {
 
     public String buildMessage() {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("%s rounds played, shooter %s:%n", rounds.size(), gameScoring));
-        builder.append(rounds.stream().map(r -> buildRoundString(r)).collect(Collectors.joining()));
+        builder.append(String.format("%s rounds played, shooter %s:%n", rounds.size(), scoring));
+        builder.append(rounds.stream().map(r -> buildRoundString(r)).collect(Collectors.joining("\n")));
         return builder.toString();
 
     }
 
-    private String buildRoundString(Round r) {
-        return String.format("Round %s: %s%n", rounds.indexOf(r) + 1, r.buildMessage());
+    private String buildRoundString(Round round) {
+        return String.format("Round %s: %s", rounds.indexOf(round) + 1, round.buildMessage());
     }
 
 }

@@ -1,32 +1,41 @@
-package de.marhan.craps
+package de.marhan.craps.round
 
+import de.marhan.craps.ComeOut
+import de.marhan.craps.Dice
+import de.marhan.craps.Player
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static RoundScoring.CRAP
-import static RoundScoring.NATURAL
-import static RoundScoring.POINT
+import static de.marhan.craps.ComeOut.*
 
-class RoundSpec extends Specification {
+class ComeOutRoundSpec extends Specification {
 
-    def "Round prints its properties"() {
+    @Unroll
+    def "Round prints #expectedMessage"() {
 
         given: "properties of round"
         def player = Mock(Player)
-        player.buildMessage() >> "shooter 1"
+        player.buildMessage() >> "player 1"
 
         and: "round is initialized with given properties"
-        def subject = new Round()
+        def subject = new ComeOutRound()
 
-        subject.roundScoring = RoundScoring.CRAP
+        subject.comeOut = comeOut
         subject.shooter = player
-        subject.sum = 2
+        subject.sum = sum
 
         when: "the message is build"
         def message = subject.buildMessage()
 
         then: "the message has shooter and sum within"
-        message == "Shooter (shooter 1) rolls 2 and has a CRAP"
+        message == expectedMessage
+
+        where:
+        sum | comeOut         | expectedMessage
+        2   | ComeOut.CRAPS   | "Shooter (player 1) come-out with 2 (CRAPS)"
+        7   | ComeOut.NATURAL | "Shooter (player 1) come-out with 7 (NATURAL)"
+        10  | ComeOut.POINT   | "Shooter (player 1) come-out with 10 (POINT)"
+
     }
 
     def "Round plays the round with shooter"() {
@@ -43,12 +52,12 @@ class RoundSpec extends Specification {
         dice2.nextValue() >> 2
 
         when: "the round to play"
-        def subject = new Round()
+        def subject = new ComeOutRound()
         subject.play(shooter, dices)
 
         then: "the round has set its properties"
         subject.sum == 3
-        subject.roundScoring == RoundScoring.CRAP
+        subject.comeOut == ComeOut.CRAPS
         subject.shooter == shooter
     }
 
@@ -56,7 +65,7 @@ class RoundSpec extends Specification {
     def "Play a round with #sum of dices and get a #expectedScore"() {
 
         given: "the game craps"
-        def subject = new Round()
+        def subject = new ComeOutRound()
 
         and: "and shooter with dices"
         def shooter = new Player(1)
@@ -71,13 +80,13 @@ class RoundSpec extends Specification {
         and: "shooter plays one round"
         def round = subject.play(shooter, dices)
 
-        then: "the roundScoring is expected"
-        round.roundScoring == expectedScore
+        then: "the comeOut is expected"
+        round.comeOut == expectedScore
 
         where:
         sum | expectedScore
-        2   | CRAP
-        3   | CRAP
+        2   | CRAPS
+        3   | CRAPS
         4   | POINT
         5   | POINT
         6   | POINT
@@ -86,7 +95,7 @@ class RoundSpec extends Specification {
         9   | POINT
         10  | POINT
         11  | NATURAL
-        12  | CRAP
+        12  | CRAPS
     }
 
 }

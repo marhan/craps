@@ -3,8 +3,8 @@ package de.marhan.craps
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static de.marhan.craps.GameScoring.LOSE
-import static de.marhan.craps.GameScoring.WINS
+import static de.marhan.craps.round.Scoring.LOSE
+import static de.marhan.craps.round.Scoring.WINS
 
 class CrapsSpec extends Specification {
 
@@ -20,67 +20,8 @@ class CrapsSpec extends Specification {
         result.rounds.size() > 0
     }
 
-    def "Play with two dices and get a sum"() {
-
-        given: "the game craps"
-        def subject = new Craps()
-
-        and: "dices return 3 as sum"
-        def dice1 = Mock(Dice)
-        def dice2 = Mock(Dice)
-        dice1.nextValue() >> 1
-        dice2.nextValue() >> 2
-        Set<Dice> dices = [dice1, dice2]
-
-        and: "three players are playing"
-        List<Player> players = [new Player(1), new Player(2), new Player(3)]
-
-        when: "craps will be played"
-        Result result = subject.playWith(players, dices)
-
-        then: "one round is played"
-        result.rounds.size() == 1
-
-        and: "the result contains the prepared sum"
-        result.rounds[0].sum == 3
-    }
-
     @Unroll
-    def "Play one round with #preparedSum of dices and get #expectedGameScoring as result"() {
-
-        given: "the game craps"
-        def subject = new Craps()
-
-        and: "with players"
-        List<Player> players = [new Player(1), new Player(2), new Player(3)]
-
-        and: "with dices which return the prepared sum"
-        def dice1 = Mock(Dice)
-        def dice2 = Mock(Dice)
-        Set<Dice> dices = [dice1, dice2]
-
-        dice1.nextValue() >> 1
-        dice2.nextValue() >> preparedSum - 1
-
-        when: "craps is played"
-        def result = subject.playWith(players, dices)
-
-        then: "the result is as expected"
-        result.rounds.size() == 1
-        result.rounds[0].sum == preparedSum
-        result.gameScoring == expectedGameScoring
-
-        where:
-        preparedSum | expectedGameScoring
-        7           | WINS
-        11          | WINS
-        2           | LOSE
-        3           | LOSE
-        12          | LOSE
-    }
-
-    @Unroll
-    def "Play second round with roll of #secondSum and get #expectedGameScoring as game scoring"() {
+    def "Player plays sequence #round01, #round02, #round03 and #gameScoring due to rolling the Point twice"() {
 
         given: "the game craps"
         def subject = new Craps()
@@ -94,29 +35,92 @@ class CrapsSpec extends Specification {
         Set<Dice> dices = [dice1, dice2]
 
         dice1.nextValue() >> 1
-        dice2.nextValue() >>> firstSum - 1 >> secondSum - 1
+        dice2.nextValue() >>> round01 - 1 >> round02 - 1 >> round03 - 1
 
         when: "craps is played"
         def result = subject.playWith(players, dices)
 
         then: "the result is as expected"
-        result.rounds.size() == 2
-        result.gameScoring == expectedGameScoring
+        result.scoring == gameScoring
+        result.buildMessage() == new TestFiles().read(expectedMessage)
 
         where:
-
-        firstSum | secondSum || expectedGameScoring
-        4        | 4         || WINS
-        5        | 5         || WINS
-        6        | 6         || WINS
-        8        | 8         || WINS
-        9        | 9         || WINS
-        10       | 10        || WINS
-
-        10       | 7         || LOSE
+        round01 | round02 | round03 || gameScoring | expectedMessage
+        4       | 2       | 4       || WINS | "03_rounds_point_04_wins"
+        5       | 3       | 5       || WINS | "03_rounds_point_05_wins"
+        6       | 5       | 6       || WINS | "03_rounds_point_06_wins"
+        8       | 6       | 8       || WINS | "03_rounds_point_08_wins"
+        9       | 8       | 9       || WINS | "03_rounds_point_09_wins"
+        10      | 9       | 10      || WINS | "03_rounds_point_10_wins"
+        8       | 6       | 7       || LOSE | "03_rounds_point_07_loses"
     }
 
+    @Unroll
+    def "Player plays sequence #round01, #round02 and #gameScoring due to rolling the Point twice"() {
 
+        given: "the game craps"
+        def subject = new Craps()
 
+        and: "with players"
+        List<Player> players = [new Player(1), new Player(2), new Player(3)]
+
+        and: "with dices which return the prepared sum"
+        def dice1 = Stub(Dice)
+        def dice2 = Stub(Dice)
+        Set<Dice> dices = [dice1, dice2]
+
+        dice1.nextValue() >> 1
+        dice2.nextValue() >>> round01 - 1 >> round02 - 1
+
+        when: "craps is played"
+        def result = subject.playWith(players, dices)
+
+        then: "the result is as expected"
+        result.scoring == gameScoring
+        result.buildMessage() == new TestFiles().read(expectedMessage)
+
+        where:
+        round01 | round02 || gameScoring | expectedMessage
+        4       | 4       || WINS | "02_rounds_point_04_wins"
+        5       | 5       || WINS | "02_rounds_point_05_wins"
+        6       | 6       || WINS | "02_rounds_point_06_wins"
+        8       | 8       || WINS | "02_rounds_point_08_wins"
+        9       | 9       || WINS | "02_rounds_point_09_wins"
+        10      | 10      || WINS | "02_rounds_point_10_wins"
+        8       | 7       || LOSE | "02_rounds_point_07_loses"
+    }
+
+    @Unroll
+    def "Player plays one round with #round and #gameScoring"() {
+
+        given: "the game craps"
+        def subject = new Craps()
+
+        and: "with players"
+        List<Player> players = [new Player(1), new Player(2), new Player(3)]
+
+        and: "with dices which return the prepared sum"
+        def dice1 = Stub(Dice)
+        def dice2 = Stub(Dice)
+        Set<Dice> dices = [dice1, dice2]
+
+        dice1.nextValue() >> 1
+        dice2.nextValue() >> round - 1
+
+        when: "craps is played"
+        def result = subject.playWith(players, dices)
+
+        then: "the result is as expected"
+        result.scoring == gameScoring
+        result.buildMessage() == new TestFiles().read(expectedMessage)
+
+        where:
+        round || gameScoring | expectedMessage
+        7     || WINS | "01_round_natural_07_wins"
+        11    || WINS | "01_round_natural_11_wins"
+        2     || LOSE | "01_round_craps_02_loses"
+        3     || LOSE | "01_round_craps_03_loses"
+        12    || LOSE | "01_round_craps_12_loses"
+    }
 
 }

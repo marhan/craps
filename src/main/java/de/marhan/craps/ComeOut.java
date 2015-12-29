@@ -5,21 +5,21 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public enum RoundScoring {
+public enum ComeOut {
 
-    CRAP(2, 3, 12),
+    CRAPS(2, 3, 12),
     NATURAL(7, 11),
     POINT(4, 5, 6, 8, 9, 10);
 
-    private Integer[] sums;
+    private final Integer[] sums;
 
-    RoundScoring(Integer... sums) {
+    ComeOut(Integer... sums) {
         this.sums = sums;
     }
 
-    public static RoundScoring determine(int sum) {
-        Predicate<RoundScoring> predicate = score -> Arrays.asList(score.sums).contains(sum);
-        Optional<RoundScoring> optional = Stream.of(RoundScoring.values()).filter(predicate).findAny();
+    public static ComeOut determine(int sum) {
+        Predicate<ComeOut> predicate = score -> Arrays.asList(score.sums).contains(sum);
+        Optional<ComeOut> optional = Stream.of(ComeOut.values()).filter(predicate).findAny();
         if (optional.isPresent()) {
             return optional.get();
         }

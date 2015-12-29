@@ -33,8 +33,8 @@ As a user i want to play one round to get the Shooter win or fail, if he has a N
 * Three players will play the game.
 * The player who rolls the dices is named as Shooter.
 * If the Shooter has a Natural, he wins.
-* If the Shooter has a Crap, he lose.
-* If the Shooter has a Point, he nether wins nor lose. 
+* If the Shooter has a Crap, he loses.
+* If the Shooter has a Point, he nether wins nor loses. 
 
 ## Craps-006
 As a user i want to play many rounds to get the Shooter win or fail after all.
@@ -43,5 +43,17 @@ As a user i want to play many rounds to get the Shooter win or fail after all.
 * If the Shooter rolls a Point in the first round, a new round starts.
 * At the second round and after, the rules for scoring are as described below.
 * If the Shooter rolls the same roll as he does in the round before, he wins.
-* If the Shooter rolls a 7, he lose.
-* If the Shooter rolls any other sum, he rolls again.   
+* If the Shooter rolls a 7, he loses.
+* If the Shooter rolls any other sum, he rolls again.
+   
+## Craps-007
+As a Shooter i want to have the Point as a second phase in the come-out round, 
+to set the Point Number for the rounds after.    
+
+### Acceptance Criteria
+* If the Shooter has a come-out with a Natural, the 'Pass' line wins and the game is over.
+* If the Shooter has a come-out with a Craps, the 'Don't Pass' line loses and the game is over.
+* If the Shooter rolls a Point, he will play as many rounds as possible until he rolls a 7.
+* The sum of the Point in the come-out round establishes the value the Shooter has to roll again.
+* If the Shooter rolls the value of the Point again, the 'Pass' line wins and the game is over. 
+* If the Shooter rolls the 7 in the a round after the Point, the 'Don't Pass' wins and the game is over.
