@@ -1,6 +1,7 @@
 package de.marhan.craps;
 
 
+import de.marhan.craps.round.Rounds;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,7 +15,7 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 public class Craps {
 
-    private static Logger LOG = LogManager.getLogger(Craps.class);
+    private static final Logger LOG = LogManager.getLogger(Craps.class);
 
     public Result play() {
 
@@ -32,21 +33,10 @@ public class Craps {
     }
 
     public Result playWith(List<Player> players, Set<Dice> dices) {
-        List<Round> rounds = playRound(players.get(0), dices, new ArrayList<>());
-        return new Result(rounds, GameScoring.determine(rounds));
+        Rounds rounds = new Rounds();
+        rounds.play(players.get(0), dices);
+        return new Result(rounds.getPlayedRounds(), rounds.getScoring());
     }
-
-    private List<Round> playRound(Player shooter, Set<Dice> dices, List<Round> rounds) {
-
-        rounds.add(new Round().play(shooter, dices));
-
-        if (GameScoring.OPEN.equals(GameScoring.determine(rounds))) {
-            playRound(shooter, dices, rounds);
-        }
-
-        return rounds;
-    }
-
 
     public static void main(String[] args) {
         LOG.info("---> Start Game <---");
