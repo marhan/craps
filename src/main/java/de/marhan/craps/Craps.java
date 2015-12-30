@@ -1,7 +1,7 @@
 package de.marhan.craps;
 
 
-import de.marhan.craps.round.Rounds;
+import de.marhan.craps.game.Games;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,25 +17,24 @@ public class Craps {
 
     private static final Logger LOG = LogManager.getLogger(Craps.class);
 
-    public Result play() {
+    public Games play() {
 
-        Set<Dice> dices = new HashSet<>();
-        dices.add(new Dice());
-        dices.add(new Dice());
+        Set<Die> dice = new HashSet<>();
+        dice.add(new Die());
+        dice.add(new Die());
 
         List<Player> players = new ArrayList<>();
         players.add(new Player(1));
         players.add(new Player(2));
         players.add(new Player(3));
 
-        return playWith(players, dices);
-
+        return play(players, dice);
     }
 
-    public Result playWith(List<Player> players, Set<Dice> dices) {
-        Rounds rounds = new Rounds();
-        rounds.play(players.get(0), dices);
-        return new Result(rounds.getPlayedRounds(), rounds.getScoring());
+    public Games play(List<Player> players, Set<Die> dice) {
+        Games games = new Games(dice);
+        players.stream().forEach(p -> games.playGame(p));
+        return games;
     }
 
     public static void main(String[] args) {
@@ -43,9 +42,9 @@ public class Craps {
         LOG.info(EMPTY);
 
         Craps craps = new Craps();
-        Result result = craps.play();
+        Games games = craps.play();
 
-        LOG.info(result.buildMessage());
+        LOG.info(games.buildMessage());
         LOG.info("---> Game Over <---");
 
     }

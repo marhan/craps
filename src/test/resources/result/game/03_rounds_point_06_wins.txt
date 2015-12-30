@@ -1,0 +1,4 @@
+3 rounds played, player 1 WINS:
+Round 1: Shooter come-out with 6 (POINT)
+Round 2: Shooter is shooting for 6 and the roll is 5
+Round 3: Shooter is shooting for 6 and the roll is 6 (Pass)

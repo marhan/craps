@@ -57,3 +57,11 @@ to set the Point Number for the rounds after.
 * The sum of the Point in the come-out round establishes the value the Shooter has to roll again.
 * If the Shooter rolls the value of the Point again, the 'Pass' line wins and the game is over. 
 * If the Shooter rolls the 7 in the a round after the Point, the 'Don't Pass' wins and the game is over.
+
+## Craps-008
+As a user i want that the three players are Shooters in rotation.  
+
+### Acceptance Criteria
+* If the first player has finished the game by winning or losing, the second player will play, and so on.
+* All three players have been the Shooter, after rotation is finished.
+* After a complete rotation the game is over.

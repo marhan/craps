@@ -2,7 +2,11 @@ package de.marhan.craps
 
 class TestFiles {
 
-    public read(fileName) {
-        new File("src/test/resources/result/${fileName}.txt").readLines().join("\n")
+    def readGame(fileName) {
+        new File("src/test/resources/result/game/${fileName}.txt").readLines().join("\n")
+    }
+
+    def read(folder, fileName) {
+        new File("src/test/resources/result/${folder}/${fileName}.txt").readLines().join("\n")
     }
 }
