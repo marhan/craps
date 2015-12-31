@@ -13,7 +13,7 @@ public class Player {
         this.number = number;
     }
 
-    public int rollDices(Set<Dice> dices) {
+    public int rollDice(Set<Die> dices) {
         return dices.stream().map(dice -> dice.nextValue()).reduce(0, (a, b) -> a + b);
     }
 

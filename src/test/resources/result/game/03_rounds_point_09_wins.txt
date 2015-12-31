@@ -1,0 +1,4 @@
+3 rounds played, player 1 WINS:
+Round 1: Shooter come-out with 9 (POINT)
+Round 2: Shooter is shooting for 9 and the roll is 8
+Round 3: Shooter is shooting for 9 and the roll is 9 (Pass)

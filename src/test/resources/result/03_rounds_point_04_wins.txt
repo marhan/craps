@@ -1,4 +1,0 @@
-3 rounds played, shooter WINS:
-Round 1: Shooter (player 1) come-out with 4 (POINT)
-Round 2: Shooter (player 1) is shooting for 4 and the roll is 2
-Round 3: Shooter (player 1) is shooting for 4 and the roll is 4 (Pass)

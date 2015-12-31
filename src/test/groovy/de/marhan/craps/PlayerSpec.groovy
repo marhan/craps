@@ -6,18 +6,18 @@ class PlayerSpec extends Specification {
 
     def "Player throws dices"() {
 
-        given: "Player with two dices"
-        Dice dice1 = Mock(Dice)
-        Dice dice2 = Mock(Dice)
+        given: "Player with two dice"
+        Die dice1 = Mock(Die)
+        Die dice2 = Mock(Die)
         Player player = new Player(1)
 
-        when: "dices will roll 3 in sum"
+        when: "dice will roll 3 in sum"
         dice1.nextValue() >> 1
         dice2.nextValue() >> 2
-        Set<Dice> dices = [dice1, dice2]
+        Set<Die> dices = [dice1, dice2]
 
-        and: "shooter rolls the dices"
-        int sum = player.rollDices(dices)
+        and: "shooter rolls the dice"
+        int sum = player.rollDice(dices)
 
         then: "the result is as expected"
         sum == 3
