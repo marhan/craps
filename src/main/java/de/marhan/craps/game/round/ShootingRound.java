@@ -2,19 +2,19 @@ package de.marhan.craps.game.round;
 
 import de.marhan.craps.Die;
 import de.marhan.craps.Player;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import de.marhan.craps.util.DomainObject;
 
 import java.util.Set;
 
 import static java.lang.String.format;
 
-public class ShootingRound implements Round {
+public class ShootingRound extends DomainObject implements Round {
+
+    private final int shootingForSum;
+    private final Set<Die> dice;
 
     private int sum;
-    private int shootingForSum;
     private ShootingResult shootingResult;
-    private final Set<Die> dice;
 
     public ShootingRound(int shootingForSum, Set<Die> dice) {
         this.shootingForSum = shootingForSum;
@@ -25,7 +25,6 @@ public class ShootingRound implements Round {
     public int getSum() {
         return sum;
     }
-
 
     public ShootingResult getShootingResult() {
         return shootingResult;
@@ -54,11 +53,6 @@ public class ShootingRound implements Round {
         }
 
         return builder.toString();
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
 }

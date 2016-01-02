@@ -2,14 +2,13 @@ package de.marhan.craps.game.round;
 
 import de.marhan.craps.Die;
 import de.marhan.craps.Player;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import de.marhan.craps.util.DomainObject;
 
 import java.util.Set;
 
 import static java.lang.String.format;
 
-public class ComeOutRound implements Round {
+public class ComeOutRound extends DomainObject implements Round {
 
     private final Set<Die> dice;
     private int sum;
@@ -40,11 +39,6 @@ public class ComeOutRound implements Round {
         builder.append("Shooter");
         builder.append(format(" come-out with %s (%s)", sum, comeOutResult));
         return builder.toString();
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
 }

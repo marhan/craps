@@ -32,7 +32,7 @@ class CrapsSpec extends Specification {
     }
 
     @Unroll
-    def "Player plays one round with #round and #gameScoring"() {
+    def "Player plays one round with sequence #sequence"() {
 
         given: "the game craps"
         def subject = new Craps()
@@ -42,7 +42,7 @@ class CrapsSpec extends Specification {
 
         and: "with dice which return the prepared sum"
         die01.nextValue() >> 1
-        die02.nextValue() >>> round[0] - 1 >> round[1] - 1 >> round[2] - 1
+        die02.nextValue() >>> sequence[0] - 1 >> sequence[1] - 1 >> sequence[2] - 1
 
         when: "craps is played"
         def games = subject.play(players, dice)
@@ -51,7 +51,7 @@ class CrapsSpec extends Specification {
         games.buildMessage() == new TestFiles().read("craps", expectedMessage)
 
         where:
-        round     || expectedMessage
+        sequence  || expectedMessage
         [7, 7, 7] || "03_players_01_round_natural_07_wins"
         [2, 2, 2] || "03_players_01_round_craps_02_loses"
     }

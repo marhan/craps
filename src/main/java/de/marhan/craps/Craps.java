@@ -2,6 +2,7 @@ package de.marhan.craps;
 
 
 import de.marhan.craps.game.Games;
+import org.apache.commons.collections4.ListUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,6 +11,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static java.lang.String.format;
+import static java.util.Collections.singletonList;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 
@@ -33,20 +36,27 @@ public class Craps {
 
     public Games play(List<Player> players, Set<Die> dice) {
         Games games = new Games(dice);
-        players.stream().forEach(p -> games.playGame(p));
+        players.stream().forEach(shooter -> {
+            List<Player> others = buildOthers(players, shooter);
+            games.play(shooter, others);
+        });
         return games;
     }
 
     public static void main(String[] args) {
-        LOG.info("---> Start Game <---");
+        LOG.info(format("%n---> Start Game <---"));
         LOG.info(EMPTY);
 
         Craps craps = new Craps();
         Games games = craps.play();
 
         LOG.info(games.buildMessage());
-        LOG.info("---> Game Over <---");
+        LOG.info(format("---> Game Over <---"));
 
+    }
+
+    private List<Player> buildOthers(List<Player> players, Player shooter) {
+        return ListUtils.subtract(players, singletonList(shooter));
     }
 
 }

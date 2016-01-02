@@ -24,8 +24,8 @@ class ScoringSpec extends Specification {
         where:
         preparedRoundScoring  | expectedGameScoring
         ComeOutResult.NATURAL | Scoring.WINS
-        ComeOutResult.CRAPS   | Scoring.LOSE
-        ComeOutResult.POINT   | Scoring.OPEN
+        ComeOutResult.CRAPS   | Scoring.LOSES
+        ComeOutResult.POINT   | Scoring.NEXT_ROUND
 
     }
 

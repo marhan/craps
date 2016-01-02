@@ -1,10 +1,9 @@
 package de.marhan.craps.game.round;
 
 import de.marhan.craps.Player;
+import de.marhan.craps.util.Message;
 
-public interface Round {
-
-    String buildMessage();
+public interface Round extends Message {
 
     int getSum();
 

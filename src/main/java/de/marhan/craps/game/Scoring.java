@@ -11,11 +11,11 @@ import java.util.stream.Stream;
 public enum Scoring {
 
     WINS(ComeOutResult.NATURAL, ShootingResult.HIT_THE_POINT),
-    LOSE(ComeOutResult.CRAPS, ShootingResult.SEVEN_OUT),
-    OPEN(ComeOutResult.POINT, ShootingResult.MISS_THE_POINT);
+    LOSES(ComeOutResult.CRAPS, ShootingResult.SEVEN_OUT),
+    NEXT_ROUND(ComeOutResult.POINT, ShootingResult.MISS_THE_POINT);
 
-    private ComeOutResult comeOutResult;
-    private ShootingResult shootingResult;
+    private final ComeOutResult comeOutResult;
+    private final ShootingResult shootingResult;
 
     Scoring(ComeOutResult comeOutResult, ShootingResult shootingResult) {
         this.comeOutResult = comeOutResult;
