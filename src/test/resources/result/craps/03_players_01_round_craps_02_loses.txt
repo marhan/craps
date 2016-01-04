@@ -1,6 +1,37 @@
-1 rounds played, player 1 LOSE:
+1 round(s) played, player 1 LOSES:
+player 1 has currently 30 euro on his account
+player 2 has currently 30 euro on his account
+player 3 has currently 30 euro on his account
 Round 1: Shooter come-out with 2 (CRAPS)
-1 rounds played, player 2 LOSE:
+player 1 bets 1 euro on PASS_LINE and LOSES
+player 2 bets 1 euro on DO_NOT_PASS_LINE and WINS
+player 3 bets 1 euro on DO_NOT_PASS_LINE and WINS
+
+---> New Game <---
+
+1 round(s) played, player 2 LOSES:
+player 1 has currently 29 euro on his account
+player 2 has currently 31 euro on his account
+player 3 has currently 31 euro on his account
 Round 1: Shooter come-out with 2 (CRAPS)
-1 rounds played, player 3 LOSE:
+player 2 bets 1 euro on PASS_LINE and LOSES
+player 1 bets 1 euro on DO_NOT_PASS_LINE and WINS
+player 3 bets 1 euro on DO_NOT_PASS_LINE and WINS
+
+---> New Game <---
+
+1 round(s) played, player 3 LOSES:
+player 1 has currently 30 euro on his account
+player 2 has currently 30 euro on his account
+player 3 has currently 32 euro on his account
 Round 1: Shooter come-out with 2 (CRAPS)
+player 3 bets 1 euro on PASS_LINE and LOSES
+player 1 bets 1 euro on DO_NOT_PASS_LINE and WINS
+player 2 bets 1 euro on DO_NOT_PASS_LINE and WINS
+
+---> Final account of players <---
+
+player 1 has currently 31 euro on his account
+player 2 has currently 31 euro on his account
+player 3 has currently 31 euro on his account
+

@@ -65,3 +65,27 @@ As a user i want that the three players are Shooters in rotation.
 * If the first player has finished the game by winning or losing, the second player will play, and so on.
 * All three players have been the Shooter, after rotation is finished.
 * After a complete rotation the game is over.
+
+## Craps-009  
+As a player i want to place a bet on Pass or Don't Pass. 
+
+### Acceptance Criteria
+* Pass line bet:
+    * If the come-out roll is 7 or 11, the bet wins.
+    * If the come-out roll is 2, 3 or 12, the bet loses (known as "crapping out").
+    * If the roll is any other value, it establishes a point.
+    * If, with a point established, that point is rolled again before a 7, the bet wins.
+    * If, with a point established, a 7 is rolled before the point is rolled again ("seven out"), the bet loses.
+* Don't Pass
+    * If the come-out roll is 2 or 3, the bet wins.
+    * If the come-out roll is 7 or 11, the bet loses.
+    * If the come-out roll is 12, the bet is a push (neither won nor lost).     
+    * If the roll is any other value, it establishes a point.
+        * If, with a point established, a 7 is rolled before the point is rolled again ("seven out"), the bet wins.
+        * If, with a point established, that point is rolled again before a 7, the bet loses.
+* All bets pays even account.
+* Every bet will have the amount of ONE.
+* A bet will done on every game iteration by every player.
+* The shooter will do a Pass line bet.
+* The other players will do a Don't pass line bet.
+    
