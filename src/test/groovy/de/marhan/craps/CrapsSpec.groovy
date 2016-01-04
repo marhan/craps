@@ -1,43 +1,69 @@
 package de.marhan.craps
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class CrapsSpec extends Specification {
 
+    def die01
+    def die02
+    Set<Die> dice
+    Config config
+
+    def setup() {
+        die01 = Stub(Die)
+        die02 = Stub(Die)
+        dice = [die01, die02]
+        config = new Config()
+    }
+
+    def "Start craps via main method and no exception is thrown"() {
+        Craps.main();
+    }
+
     def "Play with default configuration"() {
 
-        given:
-        def subject = new Craps();
+        given: "configuration"
+        config.maxGames = 5;
+        config.initialAccount = 30
 
-        when:
-        Result result = subject.play()
+        when: "the game is played"
+        def subject = new Craps(config);
 
-        then:
-        result.rounds[0].sum > 0;
+        then: "Rounds are played"
+        subject.play().gamesPlayed.size() == 5
     }
 
-    def "Play one round with two dices and get a sum"() {
+    @Unroll
+    def "One sequence with with expected output in #expectedMessage"() {
 
-        given:
-        def subject = new Craps();
+        given: "configuration"
+        config.maxGames = maxGames
+        config.initialAccount = initialAccount
 
-        when:
-        def dice1 = Mock(Dice)
-        def dice2 = Mock(Dice)
-        dice1.nextValue() >> 1
-        dice2.nextValue() >> 2
-        Set<Dice> dices = [dice1, dice2]
+        and: "craps"
+        def subject = new Craps(config)
 
-        and:
-        def player1 = new Player(1)
-        def player2 = new Player(2)
-        Set<Player> players = [player1, player2]
+        and: "with players"
+        List<Player> players = [new Player(1, initialAccount)
+                                , new Player(2, initialAccount)
+                                , new Player(3, initialAccount)]
 
-        and:
-        Result result = subject.play(dices, players)
+        and: "with dice which return the prepared sum"
+        die01.nextValue() >> 1
+        die02.nextValue() >>> sequence[0] - 1 >> sequence[1] - 1 >> sequence[2] - 1
 
-        then:
-        result.rounds.size() == 1
-        result.rounds[0].sum == 3
+        when: "craps is played"
+        def games = subject.play(players, dice)
+
+        then: "the games is as expected"
+        games.buildMessage() == new TestFiles("craps").read(expectedMessage)
+
+        where:
+        sequence  | maxGames | initialAccount || expectedMessage
+        [7, 7, 7] | 3        | 30             || "03_players_01_round_natural_07_wins"
+        [2, 2, 2] | 3        | 30             || "03_players_01_round_craps_02_loses"
+        [7, 7, 7] | 88       | 1              || "03_players_01_round_insufficient_account"
     }
-}  
+
+}

@@ -4,32 +4,38 @@ import spock.lang.Specification
 
 class PlayerSpec extends Specification {
 
+    Config config
+
+    def setup() {
+        config = new Config()
+    }
+
     def "Player throws dices"() {
 
-        given: "Player has two dices"
-        Dice dice1 = Mock(Dice)
-        Dice dice2 = Mock(Dice)
-        Player player = new Player(1);
+        given: "Player with two dice"
+        Die dice1 = Mock(Die)
+        Die dice2 = Mock(Die)
+        Player player = new Player(1, config.getInitialAccount())
 
-        when: "dices will throw 3 in sum"
+        when: "dice will roll 3 in sum"
         dice1.nextValue() >> 1
         dice2.nextValue() >> 2
-        Set<Dice> dices = [dice1, dice2]
+        Set<Die> dices = [dice1, dice2]
 
-        and: "player throws the dices"
-        int sum = player.throwDices(dices)
+        and: "shooter rolls the dice"
+        int sum = player.rollDice(dices)
 
-        then: "the sum is as expected"
+        then: "the result is as expected"
         sum == 3
     }
 
-    def "Player has his number in its message"() {
+    def "Player is identified in its message"() {
 
-        given: "Player with a number"
-        def subject = new Player(1);
+        given: "Player has a number"
+        def subject = new Player(1, config.getInitialAccount())
 
         when: "message is build"
-        def message = subject.buildMessage();
+        def message = subject.buildMessage()
 
         then: "the number can be found within the message"
         message == "player 1"
