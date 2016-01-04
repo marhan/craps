@@ -1,5 +1,6 @@
 package de.marhan.craps.game.bet
 
+import de.marhan.craps.Config
 import de.marhan.craps.Player
 import de.marhan.craps.game.round.ComeOutRound
 import de.marhan.craps.game.round.ShootingResult
@@ -14,7 +15,7 @@ class BetsSpec extends Specification {
 
     def setup() {
         subject = new Bets()
-        player = new Player(1)
+        player = new Player(1, new Config().getInitialAccount())
         player.account = BigDecimal.ONE
     }
 

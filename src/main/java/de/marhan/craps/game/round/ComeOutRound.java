@@ -35,10 +35,7 @@ public class ComeOutRound extends DomainObject implements Round {
 
     @Override
     public String buildMessage() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Shooter");
-        builder.append(format(" come-out with %s (%s)", sum, comeOutResult));
-        return builder.toString();
+        return "Shooter" + format(" come-out with %s (%s)", sum, comeOutResult);
     }
 
 }

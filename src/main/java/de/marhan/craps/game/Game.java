@@ -31,7 +31,7 @@ public class Game extends DomainObject {
         return scoring;
     }
 
-    public Game play(Player shooter, List<Player> others) {
+    public void play(Player shooter, List<Player> others) {
         this.shooter = shooter;
 
         currentAccounts = new Accounts(shooter, others);
@@ -45,7 +45,6 @@ public class Game extends DomainObject {
 
         bets.determineAndApplyBets(rounds.getLastPlayedRound());
 
-        return this;
     }
 
     public String buildMessage() {

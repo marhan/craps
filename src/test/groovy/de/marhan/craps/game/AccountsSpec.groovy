@@ -32,7 +32,7 @@ class AccountsSpec extends Specification {
         subject.snapshot()
 
         then:
-        subject.buildMessage() == new TestFiles().read("accounts", "03_players_accounts_snapshot")
+        subject.buildMessage() == new TestFiles("accounts").read("03_players_accounts_snapshot")
 
     }
 

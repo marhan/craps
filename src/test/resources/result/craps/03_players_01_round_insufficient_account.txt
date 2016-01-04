@@ -1,0 +1,15 @@
+1 round(s) played, player 1 WINS:
+player 1 has currently 1 euro on his account
+player 2 has currently 1 euro on his account
+player 3 has currently 1 euro on his account
+Round 1: Shooter come-out with 7 (NATURAL)
+player 1 bets 1 euro on PASS_LINE and WINS
+player 2 bets 1 euro on DO_NOT_PASS_LINE and LOSES
+player 3 bets 1 euro on DO_NOT_PASS_LINE and LOSES
+
+---> Final account of players <---
+
+player 1 has currently 2 euro on his account
+player 2 has currently 0 euro on his account
+player 3 has currently 0 euro on his account
+

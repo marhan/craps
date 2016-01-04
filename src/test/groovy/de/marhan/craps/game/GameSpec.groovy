@@ -13,16 +13,19 @@ import static de.marhan.craps.game.Scoring.WINS
 class GameSpec extends Specification {
 
     @Shared
-    def testFiles = new TestFiles()
+    def testFiles = new TestFiles("game")
 
-    def die01
-    def die02
+    def die01, die02
     Set<Die> dice
+    def other01, other02
 
     def setup() {
         die01 = Stub(Die)
         die02 = Stub(Die)
         dice = [die01, die02]
+
+        other01 = new Player(2, 30)
+        other02 = new Player(3, 30)
     }
 
     @Unroll
@@ -32,21 +35,21 @@ class GameSpec extends Specification {
         def subject = new Game(dice)
 
         and: "with players"
-        def shooter = new Player(1)
+        def shooter = new Player(1, 30)
 
         and: "with others"
-        def others = [new Player(2), new Player(3)]
+        def others = [other01, other02]
 
         and: "with dice which return the prepared sum"
         die01.nextValue() >> 1
         die02.nextValue() >> round - 1
 
         when: "craps is played"
-        def games = subject.play(shooter, others)
+        subject.play(shooter, others)
 
         then: "the games is as expected"
-        games.scoring == gameScoring
-        games.buildMessage().contains(testFiles.read("game", expectedMessage))
+        subject.scoring == gameScoring
+        subject.buildMessage().contains(testFiles.read(expectedMessage))
 
         where:
         round || gameScoring | expectedMessage
@@ -64,11 +67,9 @@ class GameSpec extends Specification {
         def subject = new Game(dice)
 
         and: "with shooter"
-        def shooter = new Player(1)
+        def shooter = new Player(1, 30)
 
         and: "with others"
-        def other01 = new Player(2)
-        def other02 = new Player(3)
         def others = [other01, other02]
 
         and: "with dice which return the prepared sum"
@@ -76,11 +77,11 @@ class GameSpec extends Specification {
         die02.nextValue() >>> round01 - 1 >> round02 - 1
 
         when: "craps is played"
-        def game = subject.play(shooter, others)
+        subject.play(shooter, others)
 
         then: "the result is as expected"
-        game.scoring == gameScoring
-        game.buildMessage().contains(testFiles.read("game", expectedMessage))
+        subject.scoring == gameScoring
+        subject.buildMessage().contains(testFiles.read(expectedMessage))
 
         where:
         round01 | round02 || gameScoring | expectedMessage
@@ -100,21 +101,22 @@ class GameSpec extends Specification {
         def subject = new Game(dice)
 
         and: "with shooter"
-        def shooter = new Player(1)
+        def shooter = new Player(1, 30)
 
         and: "with others"
-        def others = [new Player(2), new Player(3)]
+
+        def others = [other01, other02]
 
         and: "with dice which return the prepared sum"
         die01.nextValue() >> 1
         die02.nextValue() >>> round01 - 1 >> round02 - 1 >> round03 - 1
 
         when: "craps is played"
-        def game = subject.play(shooter, others)
+        subject.play(shooter, others)
 
         then: "the result is as expected"
-        game.scoring == gameScoring
-        game.buildMessage().contains(testFiles.read("game", expectedMessage))
+        subject.scoring == gameScoring
+        subject.buildMessage().contains(testFiles.read(expectedMessage))
 
         where:
         round01 | round02 | round03 || gameScoring | expectedMessage

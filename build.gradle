@@ -1,12 +1,13 @@
 apply plugin: "groovy"
 
-version = "0.1"
+version = "0.2"
 description = "Craps"
 
 sourceCompatibility = 1.8
 
 
 repositories {
+    jcenter()
     mavenCentral()
     maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
 }
@@ -22,6 +23,10 @@ dependencies {
 
     testRuntime "cglib:cglib-nodep:3.1"
     testRuntime "org.objenesis:objenesis:2.1"
+
+    testCompile('com.athaydes:spock-reports:1.2.7') {
+        transitive = false
+    }
 }
 
 apply plugin: 'application'

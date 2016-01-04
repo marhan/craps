@@ -88,4 +88,16 @@ As a player i want to place a bet on Pass or Don't Pass.
 * A bet will done on every game iteration by every player.
 * The shooter will do a Pass line bet.
 * The other players will do a Don't pass line bet.
-    
+
+## Craps-010
+As a user i want to play 100 games to get the players playing and betting many times.
+
+### Acceptance Criteria
+* The following should be configurable:
+    * The max number of games.
+    * The initial account of the players.  
+* The configuration provides the default values below:
+    * 100 number of games.
+    * 30 units/euro initial account.
+* If the number of games reaches maximum, the game is over.
+* If the account of any player is insufficient for bet, the game is over.

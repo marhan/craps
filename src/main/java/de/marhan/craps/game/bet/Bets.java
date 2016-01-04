@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static de.marhan.craps.util.Constants.LINE_ENDING;
+import static java.util.Comparator.comparing;
 
 public class Bets extends DomainObject {
 
@@ -76,6 +77,7 @@ public class Bets extends DomainObject {
 
     public String buildMessage() {
         return placedBets.stream()
+                .sorted(comparing(Bet::getPlayerNumber))
                 .map(bet -> bet.buildMessage())
                 .collect(Collectors.joining(LINE_ENDING));
     }
