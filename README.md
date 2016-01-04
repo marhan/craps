@@ -1,5 +1,7 @@
 # A simple simulation of the dice game [Craps](https://en.wikipedia.org/wiki/Craps)
 
+This project makes heavy use of Java Stream API and Spock Specifications. 
+
 ## Prerequisites
 
 * JDK 8
@@ -13,6 +15,10 @@
 ### Local gradle installation
   
     $ gradle clean test run
+    
+### Test reports
+
+    PROJECT_FOLDER/build/reports/tests/index.html
     
 ## Feature list
 

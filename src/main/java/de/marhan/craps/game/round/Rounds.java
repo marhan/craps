@@ -3,7 +3,6 @@ package de.marhan.craps.game.round;
 import de.marhan.craps.Die;
 import de.marhan.craps.Player;
 import de.marhan.craps.game.Scoring;
-import de.marhan.craps.util.Constants;
 import de.marhan.craps.util.DomainObject;
 
 import java.util.ArrayList;

@@ -8,11 +8,13 @@ class CrapsSpec extends Specification {
     def die01
     def die02
     Set<Die> dice
+    Config config
 
     def setup() {
         die01 = Stub(Die)
         die02 = Stub(Die)
         dice = [die01, die02]
+        config = new Config()
     }
 
     def "Start craps via main method and no exception is thrown"() {
@@ -21,24 +23,31 @@ class CrapsSpec extends Specification {
 
     def "Play with default configuration"() {
 
-        given: "A new craps game"
-        def subject = new Craps();
+        given: "configuration"
+        config.maxGames = 5;
+        config.initialAccount = 30
 
         when: "the game is played"
-        def games = subject.play()
+        def subject = new Craps(config);
 
         then: "Rounds are played"
-        !games.buildMessage().empty
+        subject.play().gamesPlayed.size() == 5
     }
 
     @Unroll
-    def "Player plays one round with sequence #sequence"() {
+    def "One sequence with with expected output in #expectedMessage"() {
 
-        given: "the game craps"
-        def subject = new Craps()
+        given: "configuration"
+        config.maxGames = maxGames
+        config.initialAccount = initialAccount
+
+        and: "craps"
+        def subject = new Craps(config)
 
         and: "with players"
-        List<Player> players = [new Player(1), new Player(2), new Player(3)]
+        List<Player> players = [new Player(1, initialAccount)
+                                , new Player(2, initialAccount)
+                                , new Player(3, initialAccount)]
 
         and: "with dice which return the prepared sum"
         die01.nextValue() >> 1
@@ -48,12 +57,13 @@ class CrapsSpec extends Specification {
         def games = subject.play(players, dice)
 
         then: "the games is as expected"
-        games.buildMessage() == new TestFiles().read("craps", expectedMessage)
+        games.buildMessage() == new TestFiles("craps").read(expectedMessage)
 
         where:
-        sequence  || expectedMessage
-        [7, 7, 7] || "03_players_01_round_natural_07_wins"
-        [2, 2, 2] || "03_players_01_round_craps_02_loses"
+        sequence  | maxGames | initialAccount || expectedMessage
+        [7, 7, 7] | 3        | 30             || "03_players_01_round_natural_07_wins"
+        [2, 2, 2] | 3        | 30             || "03_players_01_round_craps_02_loses"
+        [7, 7, 7] | 88       | 1              || "03_players_01_round_insufficient_account"
     }
 
 }

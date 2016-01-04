@@ -1,29 +1,32 @@
 package de.marhan.craps.game.round
 
+import de.marhan.craps.Config
 import de.marhan.craps.Die
 import de.marhan.craps.Player
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static ComeOutResult.*
+import static de.marhan.craps.game.round.ComeOutResult.*
 
 class ComeOutRoundSpec extends Specification {
 
     def die01
     def die02
     Set<Die> dice
+    Config config
 
     def setup() {
         die01 = Stub(Die)
         die02 = Stub(Die)
         dice = [die01, die02]
+        config = new Config()
     }
 
     @Unroll
     def "Round prints #expectedMessage"() {
 
         given: "a shooter"
-        def player = new Player(1);
+        def player = new Player(1, config.getInitialAccount());
 
         and: "dice with values"
         die01.nextValue() >> 1
@@ -59,7 +62,7 @@ class ComeOutRoundSpec extends Specification {
         def subject = new ComeOutRound(dice)
 
         and: "shooter"
-        def shooter = new Player(1)
+        def shooter = new Player(1, config.getInitialAccount())
 
         and: "dice with values"
         die01.nextValue() >> 1

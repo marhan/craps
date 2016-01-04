@@ -1,5 +1,6 @@
 package de.marhan.craps.game.round
 
+import de.marhan.craps.Config
 import de.marhan.craps.Die
 import de.marhan.craps.Player
 import spock.lang.Specification
@@ -10,18 +11,20 @@ class ShootingRoundSpec extends Specification {
     def dice1
     def dice2
     Set<Die> dice
+    Config config
 
     def setup() {
         dice1 = Stub(Die)
         dice2 = Stub(Die)
         dice = [dice1, dice2]
+        config = new Config()
     }
 
     @Unroll
     def "Round prints its properties"() {
 
         given: "shooter"
-        def shooter = new Player(1);
+        def shooter = new Player(1, config.getInitialAccount());
 
         and: "dice"
         dice1.nextValue() >> 1

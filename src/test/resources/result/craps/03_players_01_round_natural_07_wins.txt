@@ -14,8 +14,8 @@ player 1 has currently 31 euro on his account
 player 2 has currently 29 euro on his account
 player 3 has currently 29 euro on his account
 Round 1: Shooter come-out with 7 (NATURAL)
-player 2 bets 1 euro on PASS_LINE and WINS
 player 1 bets 1 euro on DO_NOT_PASS_LINE and LOSES
+player 2 bets 1 euro on PASS_LINE and WINS
 player 3 bets 1 euro on DO_NOT_PASS_LINE and LOSES
 
 ---> New Game <---
@@ -25,9 +25,9 @@ player 1 has currently 30 euro on his account
 player 2 has currently 30 euro on his account
 player 3 has currently 28 euro on his account
 Round 1: Shooter come-out with 7 (NATURAL)
-player 3 bets 1 euro on PASS_LINE and WINS
 player 1 bets 1 euro on DO_NOT_PASS_LINE and LOSES
 player 2 bets 1 euro on DO_NOT_PASS_LINE and LOSES
+player 3 bets 1 euro on PASS_LINE and WINS
 
 ---> Final account of players <---
 

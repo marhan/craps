@@ -27,17 +27,14 @@ class Bet extends DomainObject {
         return betType;
     }
 
-    public Player getPlayer() {
-        return player;
+    public int getPlayerNumber() {
+        return player.getNumber();
     }
 
     public void update(BetResult betResult, BigDecimal bettingDebt) {
         this.betResult = betResult;
-
-        BigDecimal updatedMoney = player.getAccount().add(bettingDebt);
-        player.setAccount(updatedMoney);
+        player.applyBettingDebt(bettingDebt);
     }
-
 
     public String buildMessage() {
         String messageFormat = "%s bets %s euro on %s and %s";
@@ -48,4 +45,5 @@ class Bet extends DomainObject {
                 , betType
                 , betResult);
     }
+
 }
