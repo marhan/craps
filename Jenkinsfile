@@ -1,2 +1,5 @@
 #!groovy
-./gradlew clean test
+
+node {
+  ./gradlew clean test  
+}
